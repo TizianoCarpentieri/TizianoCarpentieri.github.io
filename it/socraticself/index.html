@@ -27,106 +27,125 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareSourceCode", "name": "SocraticSelf", "alternateName": "socraticself", "description": "SocraticSelf è una Agent Skill aperta di Tiziano Carpentieri. Trasforma un appunto o un prompt grezzo nella stessa richiesta, detta chiaramente con la tua voce in prima persona, citando i file veri e ciò che è ancora aperto.", "codeRepository": "https://github.com/TizianoCarpentieri/SocraticSelf", "license": "https://opensource.org/licenses/MIT", "version": "1.1.0", "inLanguage": "it", "author": {"@type": "Person", "name": "Tiziano Carpentieri", "url": "https://github.com/TizianoCarpentieri"}}</script>
 </head>
 <body style="--signal:#ffe35a">
-<header class="hero ink flow">
-  <canvas class="scene" data-scene="flow"></canvas><div class="veil"></div>
+<div class="page">
+<header class="hero">
+  <canvas class="scene" data-scene="flow" data-band=".band-slot"></canvas>
   <div class="wrap">
     <nav class="nav">
       <a class="brand" href="../../it/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0 0 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.2 2.6" stroke-linecap="round"/><path d="M12 2a10 10 0 0 1 0 20z" fill="#ffe35a" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 .8v22.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Socratic<em>Self</em></span></a>
-      <div class="nav-links"><a class="chip" href="../../socraticself/index.html" hreflang="en">English</a><a class="chip" href="https://github.com/TizianoCarpentieri/SocraticSelf">GitHub</a></div>
+      <div class="links"><a class="chip" href="../../socraticself/index.html" hreflang="en">English</a><a class="chip" href="https://github.com/TizianoCarpentieri/SocraticSelf">GitHub</a></div>
     </nav>
-    <div class="hero-copy">
-      <span class="eyebrow"><span class="seg">Una Agent Skill aperta</span> <span class="seg">di Tiziano Carpentieri</span></span>
-      <h1><span class="l">Dillo male.</span><span class="l"><em>Rileggilo chiaro.</em></span></h1>
-      <p class="lede">Stesso pensiero. <b>La tua voce.</b> Niente di aggiunto.</p>
-      <div class="actions">
-        <button class="btn solid" data-copy="Usa SocraticSelf di Tiziano Carpentieri da https://github.com/TizianoCarpentieri/SocraticSelf. Leggi README e SKILL.md, configurala per questo agente se supportato, poi applicala al mio prossimo appunto." data-done="Copiato ✓">Copia la richiesta</button>
-        <a class="btn" href="https://github.com/TizianoCarpentieri/SocraticSelf">Vedi su GitHub</a>
+    <div class="hero-body">
+      <div class="bead axis-start"><span><span class="seg">Una Agent Skill aperta</span><span class="seg">di Tiziano Carpentieri</span></span></div>
+      <h1 class="split h-split"><span class="l">Dillo male.</span><span class="r">Rileggilo chiaro.</span></h1>
+      <p class="mid lede"><span>Stesso pensiero. <b>La tua voce.</b> Niente di aggiunto.</span></p>
+      <div class="band-slot" aria-hidden="true"></div>
+      <div class="split under"><span class="l">Quello che dici</span><span class="r">Quello che intendevi</span></div>
+      <div class="split actions">
+        <a class="l btn" href="https://github.com/TizianoCarpentieri/SocraticSelf">Vedi su GitHub</a>
+        <button class="r btn solid" data-copy="Usa SocraticSelf di Tiziano Carpentieri da https://github.com/TizianoCarpentieri/SocraticSelf. Leggi README e SKILL.md, configurala per questo agente se supportato, poi applicala al mio prossimo appunto." data-done="Copiato ✓"><span class="lab">Copia la richiesta</span></button>
       </div>
     </div>
   </div>
-  <span class="flow-l">Quello che dici</span><span class="flow-r">Quello che intendevi</span>
   <a class="cue" href="#main"><span>Scorri</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></a>
 </header>
 
 <main id="main">
-<section class="band ink why rise">
+<section class="sec rise">
   <div class="wrap">
-    <span class="eyebrow">Perché conta</span>
-    <h2><span class="l">Le parole giuste svegliano</span><span class="l"><em>gli esperti giusti.</em></span></h2>
-    <p class="lede">Un modello contiene molti saperi. Parole vaghe li sfiorano tutti un poco. Parole precise vanno dritte a quello che ti serve.</p>
-    <div class="figure" data-mode="vague">
-      <div class="promptbar"><span class="pv"><b class="tag">Vago</b>ottimizza il kernel</span><span class="pc"><b class="tag">Chiaro</b>ottimizza i kernel di calcolo GPU in src/ops/ per velocizzare l'inferenza</span></div>
-      <svg class="net" role="img" aria-label="Una rete neurale. Un prompt vago accende debolmente molte aree; un prompt chiaro ne accende una con forza." data-labels='[["Sistema", "operativo"], ["Filtri", "immagine"], ["Calcolo", "GPU"], ["Statistica", ""], ["Popcorn", ""]]' data-inp="Le tue parole" data-out-vague="Risposta generica" data-out-clear="La risposta giusta"></svg>
-      <div class="switch"><button class="sw" data-set="vague">Prompt vago</button><button class="sw" data-set="clear">Prompt chiaro</button></div>
-      <p class="caption">Un'immagine semplificata: le parole precise restringono ciò a cui un modello attinge.</p>
+    <div class="bead"><span><i></i>Come si usa</span></div>
+    <h2 class="split h-split"><span class="l">Una chat per chiarire.</span><span class="r">Una per lavorare.</span></h2>
+    <div class="split lede-row"><span class="l"></span><p class="r lede">SocraticSelf lavora dentro il tuo agente AI, con il progetto aperto. Ti restituisce la richiesta chiara, e tu la porti in una nuova chat dello stesso progetto.</p></div>
+    <div class="film" data-film data-labels='{"project": "Il tuo progetto", "chat": "Nuova chat", "left": "Dillo male.", "right": "Rileggilo chiaro."}' data-alt="Come si usa SocraticSelf in cinque passi: due chat nello stesso progetto, la prima chiarisce la richiesta, la seconda ci lavora.">
+      <div class="film-stage"></div>
+      <div class="film-bar">
+        <div class="film-steps" role="group" aria-label="Passi del filmato"><button aria-label="Passo 1">1</button><button aria-label="Passo 2">2</button><button aria-label="Passo 3">3</button><button aria-label="Passo 4">4</button><button aria-label="Passo 5">5</button></div>
+        <button class="film-play" data-play="Riprendi" data-pause="Pausa" aria-pressed="false"><span class="lab">Pausa</span></button>
+      </div>
+      <div class="film-cap"><p>Apri l'agente nel tuo progetto.</p><p>Scrivi come ti viene.</p><p>Legge i file. Se serve, chiede.</p><p>Ti ridà la richiesta, chiara.</p><p>Incollala in una nuova chat, nello stesso progetto.</p><p>SocraticSelf, una Agent Skill aperta di Tiziano Carpentieri.</p></div>
     </div>
   </div>
 </section>
 
-<section class="band rise">
+<section class="sec rise">
   <div class="wrap">
-    <span class="eyebrow">Cosa fa</span>
-    <h2><span class="l">Stesso pensiero.</span><span class="l"><em>Niente di aggiunto.</em></span></h2>
-    <p class="lede">Non ti risponde. Ti restituisce la richiesta come la intendevi.</p>
-    <div class="window">
-      <div class="chrome"><span><i></i><i></i><i></i></span><span>tuo-progetto — agente</span><span></span></div>
-      <div class="split">
-        <div class="pane you"><div class="pane-h">Quello che hai scritto</div><p class="raw">vorrei creare un piano per migliorare il progetto nella fase di inferenza ottimizzando il kernel</p></div>
-        <div class="axis"></div>
-        <div class="pane"><div class="pane-h">Quello che riceve il tuo agente</div>
-          <div class="clear">
-            <p class="rv">Voglio un piano per rendere più veloce l'<mark>inferenza</mark> ottimizzando i <mark>kernel di calcolo</mark> che questo progetto esegue sulla GPU.</p>
-            <p class="rv files"><code>src/ops/conv_kernel.cu</code><code>src/ops/attention_kernel.cu</code><code>inference/runner.py</code></p>
-            <div class="rv note"><b>Cosa so di dover ancora scoprire</b>Quale kernel occupa più tempo. Non c'è ancora nessuna misura.</div>
-            <div class="rv note"><b>Cosa potrei non vedere</b>Un kernel più veloce può non servire se il vero collo di bottiglia è il caricamento dei dati.</div>
-          </div>
-        </div>
+    <div class="bead"><span><i></i>Perché conta</span></div>
+    <h2 class="split h-split"><span class="l">Le parole giuste svegliano</span><span class="r">gli esperti giusti.</span></h2>
+    <div class="split lede-row"><span class="l"></span><p class="r lede">Un modello contiene molti saperi. Parole vaghe li sfiorano tutti un poco. Parole precise vanno dritte a quello che ti serve.</p></div>
+    <div class="prec" data-level="0">
+      <p class="prompt" aria-live="polite">ottimizza il kernel<span class="seg" data-l="1"> di calcolo GPU</span><span class="seg" data-l="2"> in src/ops/</span><span class="seg" data-l="3"> per velocizzare l'inferenza</span></p>
+      <label class="slider"><span>Vago</span><input type="range" min="0" max="3" step="1" value="0" aria-label="Quanto è preciso il prompt"><span>Chiaro</span></label>
+      <div class="orbs" aria-hidden="true"><div class="orb"><i></i><span>Sistema<br>operativo</span></div><div class="orb"><i></i><span>Filtri<br>immagine</span></div><div class="orb"><i></i><span>Calcolo<br>GPU</span></div><div class="orb"><i></i><span>Statistica<br>&nbsp;</span></div><div class="orb"><i></i><span>Popcorn<br>&nbsp;</span></div></div>
+      <div class="out"><span class="o0">Risposta generica</span><span class="o1">Più precisa</span><span class="o3">La risposta giusta</span></div>
+    </div>
+    <div class="split"><span class="l"></span><p class="r caption">Un'immagine semplificata: le parole precise restringono ciò a cui un modello attinge. Sposta la barra.</p></div>
+  </div>
+</section>
+
+<section class="sec rise">
+  <div class="wrap">
+    <div class="bead"><span><i></i>Cosa fa</span></div>
+    <h2 class="split h-split"><span class="l">Stesso pensiero.</span><span class="r">Niente di aggiunto.</span></h2>
+    <div class="split lede-row"><span class="l"></span><p class="r lede">Non ti risponde. Ti restituisce la richiesta come la intendevi.</p></div>
+    <div class="ask">
+      <div class="field"><span class="who">Quello che hai scritto</span><p class="raw">vorrei creare un piano per migliorare il progetto nella fase di inferenza ottimizzando il kernel</p></div>
+      <button class="enter" aria-label="Invia di nuovo">↵</button>
+      <div class="result">
+        <span class="who rv">Quello che ti restituisce</span>
+        <p class="clear rv">Voglio un piano per rendere più veloce l'<mark>inferenza</mark> ottimizzando i <mark>kernel di calcolo</mark> che questo progetto esegue sulla GPU.</p>
+        <p class="files rv"><code>src/ops/conv_kernel.cu</code><code>src/ops/attention_kernel.cu</code><code>inference/runner.py</code></p>
+        <div class="notes rv"><div class="note"><b>Cosa so di dover ancora scoprire</b>Quale kernel occupa più tempo. Non c'è ancora nessuna misura.</div><div class="note"><b>Cosa potrei non vedere</b>Un kernel più veloce può non servire se il vero collo di bottiglia è il caricamento dei dati.</div></div>
       </div>
     </div>
-    <p class="caption">Illustrazione. L'agente legge il tuo progetto, quindi i file che cita sono i tuoi, quelli veri.</p>
+    <div class="split"><span class="l"></span><p class="r caption">Illustrazione. L'agente legge il tuo progetto, quindi i file che cita sono i tuoi, quelli veri.</p></div>
   </div>
 </section>
 
-<section class="band rise" style="padding-top:0">
+<section class="sec rise">
   <div class="wrap">
-    <span class="eyebrow">Come funziona</span>
-    <h2><span class="l">Quattro mosse.</span><span class="l"><em>Ogni volta.</em></span></h2>
-    <div class="cols c4">
-      <div class="col"><svg class="ico" viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h4l2 3h6a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path class="scan" d="M7 10h10"/></svg><h3>Guarda.</h3><p>Legge il progetto e cita i file veri.</p></div>
-      <div class="col"><svg class="ico" viewBox="0 0 24 24"><path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M10 9.200a2 2 0 1 1 2.800 1.900c-.5.200-.8.600-.8 1.100"/><path d="M12 14.400v.1"/></svg><h3>Chiede.</h3><p>Tre domande semplici al massimo. Solo se serve.</p></div>
-      <div class="col"><svg class="ico" viewBox="0 0 24 24"><circle cx="7" cy="8" r="2.600"/><path d="M2.500 19c.4-3 2.200-4.600 4.500-4.600"/><path d="M12 3v18" stroke-dasharray="2 2.600"/><circle cx="17" cy="8" r="2.600"/><path d="M21.500 19c-.4-3-2.200-4.600-4.500-4.600"/></svg><h3>Parla come te.</h3><p>Prima persona. La tua lingua. Le parole del tuo mestiere.</p></div>
-      <div class="col"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" class="spin" stroke-dasharray="3 3.500"/><circle cx="12" cy="12" r="3.400"/><path d="M12 10.600v1.600M12 13.600v.1"/></svg><h3>Mostra i vuoti.</h3><p>Quello che ancora non sai. Quello che potresti non vedere.</p></div>
+    <div class="bead"><span><i></i>Come funziona</span></div>
+    <h2 class="split h-split"><span class="l">Quattro mosse.</span><span class="r">Ogni volta.</span></h2>
+    <div class="cycle">
+      <div class="ring" aria-hidden="true"><svg viewBox="0 0 200 200"><circle class="track" cx="100" cy="100" r="90"/><circle class="pt" cx="100" cy="10" r="5.5"/><circle class="pt" cx="190" cy="100" r="5.5"/><circle class="pt" cx="100" cy="190" r="5.5"/><circle class="pt" cx="10" cy="100" r="5.5"/><circle class="spark" cx="100" cy="10" r="3.6"/></svg><div class="core"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0 0 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.2 2.6" stroke-linecap="round"/><path d="M12 2a10 10 0 0 1 0 20z" fill="#ffe35a" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 .8v22.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div></div>
+      <div class="mv m1"><b>Guarda.</b><span>Legge il progetto e cita i file veri.</span></div>
+      <div class="mv m2"><b>Chiede.</b><span>Tre domande semplici al massimo. Solo se serve.</span></div>
+      <div class="mv m3"><b>Parla come te.</b><span>Prima persona. La tua lingua. Le parole del tuo mestiere.</span></div>
+      <div class="mv m4"><b>Mostra i vuoti.</b><span>Quello che ancora non sai. Quello che potresti non vedere.</span></div>
     </div>
   </div>
 </section>
 
-<section class="band ink rise" id="use">
+<section class="sec rise" id="use">
   <div class="wrap">
-    <span class="eyebrow">Provala</span>
-    <h2><span class="l">Basta chiederlo</span><span class="l"><em>al tuo agente AI.</em></span></h2>
-    <div class="request">
+    <div class="bead"><span><i></i>Provala</span></div>
+    <h2 class="split h-split"><span class="l">Basta chiederlo</span><span class="r">al tuo agente AI.</span></h2>
+    <div class="plate">
       <p>Usa <b>SocraticSelf di Tiziano Carpentieri</b> da</p>
       <span class="url">github.com/<wbr>TizianoCarpentieri/<wbr>SocraticSelf</span>
       <p>Leggi README e SKILL.md, configurala per questo agente se supportato, poi applicala al mio prossimo appunto.</p>
-      <div class="actions">
-        <button class="btn solid" data-copy="Usa SocraticSelf di Tiziano Carpentieri da https://github.com/TizianoCarpentieri/SocraticSelf. Leggi README e SKILL.md, configurala per questo agente se supportato, poi applicala al mio prossimo appunto." data-done="Copiato ✓">Copia la richiesta</button>
+      <div class="pair">
+        <button class="btn solid" data-copy="Usa SocraticSelf di Tiziano Carpentieri da https://github.com/TizianoCarpentieri/SocraticSelf. Leggi README e SKILL.md, configurala per questo agente se supportato, poi applicala al mio prossimo appunto." data-done="Copiato ✓"><span class="lab">Copia la richiesta</span></button>
         <a class="btn" href="https://github.com/TizianoCarpentieri/SocraticSelf#everyday-examples">Guarda esempi veri</a>
       </div>
     </div>
     <div class="cmd"><span>$</span><code>npx skills add TizianoCarpentieri/SocraticSelf --skill socraticself</code></div>
-    <p class="caption">Non servono terminale né account. Se il tuo agente non apre i link, incolla nella chat il testo di SKILL.md.</p>
+    <p class="mid caption"><span>Non servono terminale né account. Se il tuo agente non apre i link, incolla nella chat il testo di SKILL.md.</span></p>
   </div>
 </section>
 </main>
-<footer class="ink">
+<footer>
   <div class="wrap">
+    <span class="end-dot" aria-hidden="true"></span>
     <span class="sigla sign" role="img" aria-label="Sigla di Tiziano Carpentieri"></span>
     <div class="foot-row">
-      <span>© 2026 <a href="../../it/index.html">Tiziano Carpentieri</a> · MIT · SocraticSelf 1.1.0</span>
+      <span>© 2026 <a href="../../it/index.html">Tiziano Carpentieri</a>, MIT, SocraticSelf 1.1.0</span>
       <a href="https://github.com/TizianoCarpentieri/SocraticSelf">github.com/TizianoCarpentieri/SocraticSelf</a>
     </div>
   </div>
 </footer>
+<div class="axis" aria-hidden="true"><i></i></div>
+</div>
+<script src="../../assets/film.js"></script>
 <script src="../../assets/site.js"></script>
 </body>
 </html>
