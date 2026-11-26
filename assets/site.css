@@ -199,6 +199,21 @@ h2.h-split{font:500 clamp(28px,3.3vw,50px)/1.08 var(--display);letter-spacing:-.
 .cmd::-webkit-scrollbar{display:none}
 .cmd span{color:#7c7c8e}.cmd code{font:inherit;margin:0 auto}
 
+/* domains: five kinds of folder, fixed height grid so switching never shifts layout */
+.domains{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:28px;width:100%}
+.dom-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;background:var(--night);padding:6px 12px;border-radius:999px}
+.dom-tabs button{height:38px;padding:0 18px;border-radius:999px;border:1px solid var(--hair);background:var(--night);color:var(--dust);font:500 14px/1 var(--sans);white-space:nowrap;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.dom-tabs button:hover{border-color:rgba(255,255,255,.4);color:var(--moon)}
+.dom-tabs button.on{background:var(--signal);border-color:var(--signal);color:#111}
+.dom-cards{display:grid;width:100%}
+.dom-card{grid-area:1/1;opacity:0;pointer-events:none;transition:opacity .35s;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:calc(2*var(--gap));align-items:stretch}
+.dom-card.on{opacity:1;pointer-events:auto}
+.dom-pane{width:100%;max-width:480px;border:1px solid var(--hair);border-radius:20px;background:var(--night-2);padding:22px 24px;display:flex;flex-direction:column;gap:10px;text-align:left}
+.dom-pane.l{justify-self:end}.dom-pane.r{justify-self:start}
+.dom-pane .who{font:500 13px/1 var(--sans);white-space:nowrap}
+.dom-pane.l .who{color:var(--raw)}.dom-pane.r .who{color:var(--signal)}
+.dom-pane p{font-size:17px;line-height:1.5;color:#dcdbe6}
+
 /* rows: one per rule, with a station on the line */
 .rows{display:flex;flex-direction:column;gap:34px}
 .row{position:relative;align-items:baseline}
@@ -291,6 +306,10 @@ footer.written .sign use{mask:none}footer.written .sign .fresh{display:none}
   .out{padding-left:0}
   .ask{grid-template-columns:minmax(0,1fr);row-gap:14px}
   .field,.result{max-width:none;padding:18px}
+  .dom-tabs{justify-content:flex-start;border-radius:18px;padding:0;background:none;gap:8px}
+  .dom-tabs button{height:34px;padding:0 14px;font-size:13px}
+  .dom-card{grid-template-columns:minmax(0,1fr);row-gap:14px}
+  .dom-pane{max-width:none;padding:18px}
   .enter{justify-self:start;margin:0}
   .cycle{grid-template-columns:minmax(0,1fr);row-gap:16px}
   .cycle .ring{grid-area:auto;width:min(220px,64vw);margin:0 0 10px}

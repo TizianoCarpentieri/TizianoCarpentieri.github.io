@@ -7,5 +7,6 @@ Live at **[tizianocarpentieri.github.io](https://tizianocarpentieri.github.io/)*
 | Page | Creation | Repository |
 | --- | --- | --- |
 | [SocraticSelf](https://tizianocarpentieri.github.io/socraticself/) · [italiano](https://tizianocarpentieri.github.io/it/socraticself/) | An open Agent Skill: say it messy, get it clear | [TizianoCarpentieri/SocraticSelf](https://github.com/TizianoCarpentieri/SocraticSelf) |
+| [ProjectLearns](https://tizianocarpentieri.github.io/projectlearns/) · [italiano](https://tizianocarpentieri.github.io/it/projectlearns/) | An open Agent Skill: solid foundations, great projects | [TizianoCarpentieri/ProjectLearns](https://github.com/TizianoCarpentieri/ProjectLearns) |
 
 This repository holds only the published site, generated elsewhere. Changes made here by hand are overwritten by the next build.

@@ -141,13 +141,100 @@
     }
   }
 
-  /* the film, when the page has one (film.js) */
-  if(window.SSFilm)document.querySelectorAll('[data-film]').forEach(function(f){SSFilm(f,{labels:JSON.parse(f.dataset.labels),alt:f.dataset.alt})});
+  /* domains: five kinds of folder in a fixed-height grid, auto-cycling until the reader picks one */
+  var dom=document.querySelector('.domains');
+  if(dom){
+    var dBtns=[].slice.call(dom.querySelectorAll('.dom-tabs button')), dCards=[].slice.call(dom.querySelectorAll('.dom-card')), dCur=0, dAuto=null, dTouched=false;
+    var setDom=function(i){
+      dCur=i;
+      dBtns.forEach(function(b,k){b.classList.toggle('on',k===i);b.setAttribute('aria-pressed',String(k===i))});
+      dCards.forEach(function(c,k){c.classList.toggle('on',k===i);c.setAttribute('aria-hidden',String(k!==i))});
+    };
+    dBtns.forEach(function(b,i){b.addEventListener('click',function(){dTouched=true;clearTimeout(dAuto);setDom(i)})});
+    var runDom=function(){if(dTouched)return;dAuto=setTimeout(function(){setDom((dCur+1)%dBtns.length);runDom()},3600)};
+    setDom(0);
+    if(!reduce)when(dom,runDom,.35);
+  }
+
+  /* the film, when the page has one (film.js or projectlearns-film.js) */
+  document.querySelectorAll('[data-film]').forEach(function(f){
+    var fn=f.dataset.film==='projectlearns'?window.PLFilm:window.SSFilm;
+    if(fn)fn(f,{labels:JSON.parse(f.dataset.labels),alt:f.dataset.alt});
+  });
 
   /* scenes: each project picks one; the canvas is placed out of the flow, so layout never moves.
      A scene advances by S.k per draw (1 = one frame at full speed) and may read S.e, how far it has gone into depth (0 in the opening, 1 behind the content). */
   var hex=function(h){h=h.replace('#','');var n=parseInt(h,16);return [(n>>16)&255,(n>>8)&255,n&255]};
+  var roundRect=function(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath()};
   var SCENES={
+    /* projectlearns: scattered fragments on the left cross the luminous line and anchor into a golden spine with living rule pulses.
+       In depth its vertical band opens smoothly so drifting fragments and structured golden rays flank the page content. */
+    learns:function(S,cfg){
+      var c=S.ctx, frags=[], sparks=[], top=0, bot=0, t0=0, b0=0, mid=0, sig=cfg.signal, rgb=hex(sig), ph=0;
+      var PAL=['#8b6cff','#ff5fa8','#4cc3ff','#b9a6ff','#ff9f5a'];
+      return {init:function(){
+          var band=cfg.band&&S.host.querySelector(cfg.band), hr=S.host.getBoundingClientRect();
+          if(band&&band.offsetHeight){var br=band.getBoundingClientRect();t0=br.top-hr.top+8+S.oy;b0=br.bottom-hr.top-8+S.oy}else{t0=S.H*.14;b0=S.H*.86}
+          top=t0;bot=b0;mid=S.W/2; frags=[]; sparks=[];
+          var nf=Math.round(Math.min(32,Math.max(12,S.W/42))), ns=Math.round(Math.min(60,Math.max(24,S.W/20)));
+          for(var i=0;i<nf;i++)frags.push({bx:24+Math.random()*Math.max(40,mid-68),by:Math.random(),w:16+Math.random()*16,h:10+Math.random()*7,rot:(Math.random()-.5)*.45,ax:6+Math.random()*12,ay:6+Math.random()*10,ph:Math.random()*6.28,k:1+(i%2),c:PAL[i%PAL.length]});
+          for(var s=0;s<ns;s++)sparks.push({u:Math.random(),by:Math.random(),amp:10+Math.random()*18,ph:Math.random()*6.28,r:1.1+Math.random()*1.5,c:PAL[s%PAL.length]});
+          c.fillStyle='#0c0c10';c.fillRect(0,0,S.W,S.H)},
+        draw:function(){var W=S.W,H=S.H,k=S.k; ph=(ph+.0035*k)%1;
+          if(S.e){top=t0+(S.oy+H*.10-t0)*S.e;bot=b0+(H-S.oy-H*.10-b0)*S.e}else{top=t0;bot=b0}
+          var th=ph*Math.PI*2, bh=Math.max(80,bot-top), hubYs=[top+bh*.2,top+bh*.5,top+bh*.8];
+          var rightW=W-mid, compact=rightW<220, hubX=mid+Math.min(62,rightW*.16);
+          var c1x=mid+Math.min(156,rightW*.44), c2x=mid+Math.min(254,rightW*.72), cw=compact?38:48, ch=compact?24:28;
+          c.fillStyle='#0c0c10';c.fillRect(0,0,W,H);
+          var glow=c.createRadialGradient(mid,(top+bot)/2,4,mid,(top+bot)/2,Math.min(180,W*.25));
+          glow.addColorStop(0,'rgba('+rgb+',.10)');glow.addColorStop(1,'rgba('+rgb+',0)');
+          c.fillStyle=glow;c.fillRect(mid-180,top-30,360,bh+60);
+          /* Left: sparks pulling toward the line */
+          for(var i=0;i<sparks.length;i++){var sp=sparks[i], pu=(sp.u+ph)%1, x=10+pu*(mid-14), pull=Math.max(0,(pu-.6)/.4);
+            var ty=hubYs[i%3], ry=top+sp.by*bh+Math.sin(th+sp.ph+pu*5)*sp.amp*(1-.75*pull), y=ry*(1-.65*pull)+ty*(.65*pull);
+            c.globalAlpha=.18+.65*Math.sin(pu*Math.PI);c.fillStyle=pull>.65?sig:sp.c;c.beginPath();c.arc(x,y,sp.r*(1+.35*pull),0,6.3);c.fill()}
+          c.globalAlpha=1;
+          /* Left: scattered floating fragments */
+          for(var f=0;f<frags.length;f++){var fr=frags[f], fx=fr.bx+Math.cos(th*fr.k+fr.ph)*fr.ax, fy=top+fr.by*bh+Math.sin(th*fr.k+fr.ph*1.3)*fr.ay;
+            var near=Math.max(0,1-(mid-fx)/110);
+            c.save();c.translate(fx,fy);c.rotate((fr.rot+Math.sin(th+fr.ph)*.08)*(1-near*.7));
+            c.fillStyle='rgba(21,21,28,.82)';c.strokeStyle=fr.c;c.globalAlpha=.36+.24*Math.sin(th+fr.ph)*.5+.2;c.lineWidth=1.1;
+            roundRect(c,-fr.w/2,-fr.h/2,fr.w,fr.h,3);c.fill();c.stroke();
+            c.beginPath();c.moveTo(-fr.w/2+3.5,-1.5);c.lineTo(fr.w/2-4,-1.5);c.moveTo(-fr.w/2+3.5,2.2);c.lineTo(fr.w/2-7,2.2);
+            c.strokeStyle='rgba(245,244,239,.25)';c.stroke();c.restore()}
+          c.globalAlpha=1;
+          /* Right: golden spine + hub nodes */
+          c.strokeStyle='rgba('+rgb+',.45)';c.lineWidth=1.7;c.beginPath();c.moveTo(hubX,hubYs[0]);c.lineTo(hubX,hubYs[2]);c.stroke();
+          for(var h=0;h<3;h++){var hy=hubYs[h];
+            c.strokeStyle='rgba('+rgb+',.28)';c.lineWidth=1.2;c.beginPath();c.moveTo(mid,hy);c.lineTo(hubX,hy);c.stroke();
+            var ep=(ph*2+h*.33)%1; c.fillStyle=sig;c.globalAlpha=Math.sin(ep*Math.PI)*.9;c.beginPath();c.arc(mid+(hubX-mid)*ep,hy,2.1,0,6.3);c.fill();
+            c.globalAlpha=1;
+            /* Structured cards along each tier */
+            var cols=compact?[c1x]:[c1x,c2x];
+            for(var q=0;q<cols.length;q++){var cx=cols[q], px=q===0?hubX:cols[0]+cw/2, lx=cx-cw/2;
+              c.strokeStyle='rgba('+rgb+',.22)';c.lineWidth=1.2;c.beginPath();c.moveTo(px,hy);c.lineTo(lx,hy);c.stroke();
+              var lp=(ph+h*.28+q*.33)%1, lit=lp>.42&&lp<.58?1:Math.max(0,1-Math.abs(lp-.5)*6), ux=lp<.5?px+(lx-px)*(lp/.5):lx-(lx-px)*((lp-.5)/.5);
+              c.fillStyle='#fff6c8';c.beginPath();c.arc(ux,hy,2.1,0,6.3);c.fill();
+              c.save();roundRect(c,cx-cw/2,hy-ch/2,cw,ch,6);c.fillStyle=lit>.1?'rgba(28,26,16,.95)':'rgba(21,21,28,.95)';c.fill();
+              c.strokeStyle='rgba('+rgb+','+(.28+.62*lit).toFixed(3)+')';c.lineWidth=1.1+.7*lit;c.stroke();
+              c.strokeStyle='rgba('+rgb+','+(.5+.5*lit).toFixed(3)+')';c.lineWidth=1.9;c.lineCap='round';c.beginPath();c.moveTo(cx-cw/2+7,hy-4.5);c.lineTo(cx+cw/2-8,hy-4.5);c.stroke();
+              c.strokeStyle='rgba(245,244,239,'+(.26+.3*lit).toFixed(3)+')';c.lineWidth=1.5;c.beginPath();c.moveTo(cx-cw/2+7,hy+2);c.lineTo(cx+cw/2-13,hy+2);c.stroke();c.restore()}
+            /* Forward rule rays to the right edge */
+            var rx0=cols[cols.length-1]+cw/2;
+            c.strokeStyle='rgba('+rgb+',.18)';c.lineWidth=1.2;c.beginPath();c.moveTo(rx0,hy);c.lineTo(W+4,hy);c.stroke();
+            for(var m=0;m<2;m++){var bu=(ph+h*.33+m*.5)%1, bx=rx0+bu*(W-rx0+26), rg=c.createLinearGradient(bx-34,hy,bx,hy);
+              rg.addColorStop(0,'rgba('+rgb+',0)');rg.addColorStop(1,'rgba('+rgb+',.92)');
+              c.strokeStyle=rg;c.lineWidth=1.9;c.beginPath();c.moveTo(Math.max(rx0,bx-34),hy);c.lineTo(bx,hy);c.stroke();
+              c.fillStyle='#fff6c8';c.beginPath();c.arc(bx,hy,1.8,0,6.3);c.fill()}
+            /* Hub node + ripple */
+            var rip=(ph*2+h*.33+.06)%1;
+            if(rip<.45){var rr=rip/.45;c.strokeStyle='rgba('+rgb+','+((1-rr)*.6).toFixed(3)+')';c.lineWidth=1.3;c.beginPath();c.arc(hubX,hy,5.5+rr*13,0,6.3);c.stroke()}
+            c.save();c.shadowColor=sig;c.shadowBlur=12;c.fillStyle='#1c1a10';c.strokeStyle=sig;c.lineWidth=1.9;c.beginPath();c.arc(hubX,hy,5.5,0,6.3);c.fill();c.stroke();
+            c.fillStyle='#fff6c8';c.beginPath();c.arc(hubX,hy,2.2,0,6.3);c.fill();c.restore()}
+          /* Central luminous vertical line */
+          var g=c.createLinearGradient(0,top-26,0,bot+26);g.addColorStop(0,'rgba('+rgb+',0)');g.addColorStop(.5,'rgba(255,246,200,1)');g.addColorStop(1,'rgba('+rgb+',0)');
+          c.shadowColor=sig;c.shadowBlur=28;c.fillStyle=g;c.fillRect(mid-1.5,top-26,3,bh+52);c.shadowBlur=0}};
+    },
     /* the flow: a disordered swarm enters from the left, crosses a luminous line and leaves in ordered files.
        In depth its band opens to most of the height, so the files fill the empty sides. */
     flow:function(S,cfg){
