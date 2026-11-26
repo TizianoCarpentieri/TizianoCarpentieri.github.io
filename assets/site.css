@@ -63,7 +63,34 @@ h2.h-split{font:500 clamp(28px,3.3vw,50px)/1.08 var(--display);letter-spacing:-.
 /* opening */
 .hero{position:relative;overflow:hidden;min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
 .hero canvas.scene{position:absolute;inset:0;width:100%;height:100%;display:block}
-.hero canvas.scene[data-scene="network"]{-webkit-mask-image:linear-gradient(#000 40%,transparent 96%);mask-image:linear-gradient(#000 40%,transparent 96%)}
+.hero canvas.scene[data-scene="network"]{-webkit-mask-image:linear-gradient(#000 var(--m0,40%),rgba(0,0,0,var(--fade,0)) var(--m1,96%));mask-image:linear-gradient(#000 var(--m0,40%),rgba(0,0,0,var(--fade,0)) var(--m1,96%))}
+
+/* depth: the opening scene does not leave with the opening. While the opening scrolls away the scene recedes behind the content,
+   smaller, dimmer and slower, and keeps running there. On a wide screen it shows in the empty space on both sides of the text:
+   a veil that scrolls with the content keeps the text column on plain ink. On a phone, where there are no empty sides, it dissolves.
+   The look is set here once, for every project. Only transform, opacity and filter change, on layers out of the flow: no block moves.
+   With reduced motion the scene stays a still frame inside the opening, as before. */
+:root{
+  --depth-scale:.92; --depth-dim:.5; --depth-speed:.5; --depth-blur:0;
+  --depth-veil:1; --depth-clear:min(500px,38vw); --depth-feather:120px;
+  --depth-wide:stay; --depth-phone:fade; --depth-faint:.2;
+}
+.deep .hero canvas.scene{position:fixed;transform-origin:50% 50%;will-change:transform,opacity}
+@media (min-width:761px){
+  .deep main,.deep footer>.wrap{position:relative}
+  .deep main::before,.deep footer::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:var(--depth-veil);
+    background:linear-gradient(90deg,
+      rgba(12,12,16,0) calc(50% - var(--depth-clear) - var(--depth-feather)),
+      rgba(12,12,16,.5) calc(50% - var(--depth-clear) - var(--depth-feather)*.45),
+      rgba(12,12,16,.88) calc(50% - var(--depth-clear) - var(--depth-feather)*.15),
+      var(--night) calc(50% - var(--depth-clear)),
+      var(--night) calc(50% + var(--depth-clear)),
+      rgba(12,12,16,.88) calc(50% + var(--depth-clear) + var(--depth-feather)*.15),
+      rgba(12,12,16,.5) calc(50% + var(--depth-clear) + var(--depth-feather)*.45),
+      rgba(12,12,16,0) calc(50% + var(--depth-clear) + var(--depth-feather)))}
+  /* the content rolls over the scene: the veil comes in across the first section's top padding */
+  .deep main::before{-webkit-mask-image:linear-gradient(transparent,#000 120px);mask-image:linear-gradient(transparent,#000 120px)}
+}
 .hero>.wrap{position:relative;z-index:1;width:100%;flex:1;display:flex;flex-direction:column}
 .hero-body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:28px;padding:24px 0 84px}
 .band-slot{height:clamp(150px,24vh,250px)}
@@ -206,8 +233,8 @@ h2.h-split{font:500 clamp(28px,3.3vw,50px)/1.08 var(--display);letter-spacing:-.
 .go{font:500 15px/1 var(--sans);color:var(--moon);text-underline-offset:6px;text-decoration-color:var(--signal);text-decoration-thickness:2px;white-space:nowrap;margin-top:8px}
 .go:hover{color:var(--signal)}
 
-/* footer: the line ends where the signature begins */
-footer{position:relative;padding:120px 0 40px;font-size:13.5px;color:#8a8a9c}
+/* footer: the line lands on its dot, the dot lights, and the signature is written below it by its own pen */
+footer{position:relative;padding:120px 0 72px;font-size:13.5px;color:#8a8a9c}
 footer .wrap{display:flex;flex-direction:column;align-items:center;gap:40px}
 footer a{color:#b5b5c5;white-space:nowrap}
 /* links out: round buttons with an icon, a pill for the project repository; colour changes only, nothing moves */
@@ -217,15 +244,22 @@ footer .foot-icon{width:44px}
 footer .foot-pill{gap:10px;padding:0 20px 0 16px;font:500 14px/1 var(--sans)}
 .foot-icon svg,.foot-pill svg{width:18px;height:18px;fill:currentColor;flex:none}
 footer .foot-icon:hover,footer .foot-pill:hover,footer .foot-icon:focus-visible,footer .foot-pill:focus-visible{border-color:var(--signal);color:var(--signal);outline:none}
-.foot-legal{margin:-16px 0 0;text-align:center}
-.end-dot{position:relative;z-index:1;width:9px;height:9px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);margin-bottom:-24px}
+/* the last line reads across the line: the work and its licence on the left, the author on the right */
+.foot-legal{width:100%;margin:-12px 0 0;row-gap:4px}
+/* the dot is a station like the others: a ring until the line reaches it, then lit, with one ring that spreads and fades */
+.end-dot{position:relative;z-index:1;width:9px;height:9px;border-radius:50%;border:1.5px solid var(--signal);background:var(--signal);box-shadow:0 0 12px var(--signal);margin-bottom:-24px;transition:background .5s,box-shadow .5s,border-color .5s}
+.end-dot::after{content:"";position:absolute;inset:-1.5px;border-radius:50%;border:1.5px solid var(--signal);opacity:0;pointer-events:none}
+.js footer:not(.landed) .end-dot{background:var(--night);border-color:rgba(255,227,90,.5);box-shadow:none}
+footer.landed .end-dot::after{animation:land 1.3s cubic-bezier(.2,.7,.3,1) both}
+@keyframes land{from{transform:scale(1);opacity:.9}to{transform:scale(6);opacity:0}}
 
 /* signature: Tiziano's initials, one SVG used as a mask so it takes the colour of the text around it */
 .sigla{display:inline-block;flex:none;aspect-ratio:708/507;background:currentColor;-webkit-mask:url(sigla.svg) center/contain no-repeat;mask:url(sigla.svg) center/contain no-repeat}
-footer .sigla{position:relative;z-index:1;width:168px;color:var(--moon)}
-/* written left to right: a clip, so its box never changes */
-.js footer .sign{clip-path:inset(0 100% 0 0);transition:clip-path 1.8s cubic-bezier(.6,.05,.3,1) .2s}
-.js footer.in .sign{clip-path:inset(0 0 0 0)}
+/* written by its pen: the strokes of penna.json run in a mask over the ink, so the box never changes.
+   Fresh ink has the colour of the line and settles to the colour of the text a moment later; once written the masks go. */
+footer .sign{position:relative;z-index:1;display:block;width:clamp(168px,13vw,200px);height:auto;aspect-ratio:708/507;overflow:visible}
+.sign .ink{color:var(--moon)}.sign .fresh{color:var(--signal)}
+footer.written .sign use{mask:none}footer.written .sign .fresh{display:none}
 .home-brand{gap:12px}.home-brand .sigla{width:46px}
 
 .js .rise{opacity:0;transition:opacity .9s}
@@ -277,7 +311,6 @@ footer .sigla{position:relative;z-index:1;width:168px;color:var(--moon)}
   .stations{gap:56px}
   footer .wrap{align-items:flex-start}
   .foot-links{justify-content:flex-start}
-  .foot-legal{text-align:left}
   .end-dot{margin-left:-29px;margin-bottom:-20px}
 }
 @media (max-width:560px){
@@ -286,4 +319,4 @@ footer .sigla{position:relative;z-index:1;width:168px;color:var(--moon)}
   .home-brand span:not(.sigla){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.home-brand .sigla{width:52px}
 }
 @media (max-width:420px){.film-bar{border-radius:18px;row-gap:8px}}
-@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.js .cue{opacity:1}.js footer .sign{clip-path:none}.mv{opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.js .cue{opacity:1}.mv{opacity:1}}
