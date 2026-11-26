@@ -209,9 +209,15 @@ h2.h-split{font:500 clamp(28px,3.3vw,50px)/1.08 var(--display);letter-spacing:-.
 /* footer: the line ends where the signature begins */
 footer{position:relative;padding:120px 0 40px;font-size:13.5px;color:#8a8a9c}
 footer .wrap{display:flex;flex-direction:column;align-items:center;gap:40px}
-.foot-row{width:100%;display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}
 footer a{color:#b5b5c5;white-space:nowrap}
-.foot-links{display:flex;flex-wrap:wrap;gap:12px 20px}
+/* links out: round buttons with an icon, a pill for the project repository; colour changes only, nothing moves */
+.foot-links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px}
+footer .foot-icon,footer .foot-pill{display:inline-flex;align-items:center;justify-content:center;height:44px;border:1px solid var(--hair);border-radius:999px;background:var(--night);color:var(--moon);text-decoration:none;transition:border-color .25s,color .25s}
+footer .foot-icon{width:44px}
+footer .foot-pill{gap:10px;padding:0 20px 0 16px;font:500 14px/1 var(--sans)}
+.foot-icon svg,.foot-pill svg{width:18px;height:18px;fill:currentColor;flex:none}
+footer .foot-icon:hover,footer .foot-pill:hover,footer .foot-icon:focus-visible,footer .foot-pill:focus-visible{border-color:var(--signal);color:var(--signal);outline:none}
+.foot-legal{margin:-16px 0 0;text-align:center}
 .end-dot{position:relative;z-index:1;width:9px;height:9px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);margin-bottom:-24px}
 
 /* signature: Tiziano's initials, one SVG used as a mask so it takes the colour of the text around it */
@@ -270,6 +276,8 @@ footer .sigla{position:relative;z-index:1;width:168px;color:var(--moon)}
   .st-name{white-space:normal}
   .stations{gap:56px}
   footer .wrap{align-items:flex-start}
+  .foot-links{justify-content:flex-start}
+  .foot-legal{text-align:left}
   .end-dot{margin-left:-29px;margin-bottom:-20px}
 }
 @media (max-width:560px){
